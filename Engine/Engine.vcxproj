@@ -13,10 +13,12 @@
   <ItemGroup>
     <ClInclude Include="Source\menitecore.h" />
     <ClInclude Include="Source\meniteengine.h" />
+    <ClInclude Include="Source\meniteshader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\menitecore.cpp" />
+    <ClCompile Include="Source\meniteshader.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5638C291-0B9A-4611-8FFB-7475C4C6401E}</ProjectGuid>

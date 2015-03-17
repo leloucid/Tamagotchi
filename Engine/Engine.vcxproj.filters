@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Menite">
-      <UniqueIdentifier>{c8617909-fd1c-4822-b3be-883f80544a04}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\menitecore.h">
@@ -24,12 +21,18 @@
     <ClInclude Include="Source\meniteengine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\meniteshader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\menitecore.cpp">
-      <Filter>Source Files\Menite</Filter>
-    </ClCompile>
     <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\menitecore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\meniteshader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

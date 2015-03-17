@@ -6,6 +6,9 @@
     global scope variable and the basic function to call engine.
 ****/
 
+#ifndef MENITE_CORE
+#define MENITE_CORE
+
 /**
     Include library
 **/
@@ -66,7 +69,7 @@ typedef struct MEwindow{
     GLchar *title;
 } MEwindow;
 
-/* Menite pointer */
+/* Menite Execute function callback pointer */
 typedef GLvoid (*MEEXEptr)();
 
 /**
@@ -80,7 +83,9 @@ extern MEwindow meniteWindow;
 GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title);
 
 /* Execute game loop (with execute function for draw any game object and check any game event) */
-GLvoid MeniteExecute(MEEXEptr executefunction);
+GLvoid MeniteExecute(MEEXEptr initialfunction, MEEXEptr executefunction, MEEXEptr endfunction);
 
 /* Stop game loop */
 GLvoid MeniteStop();
+
+#endif MENITE_CORE
