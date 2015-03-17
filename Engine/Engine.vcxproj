@@ -10,10 +10,19 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\menitecore.h" />
+    <ClInclude Include="Source\meniteengine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\menitecore.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5638C291-0B9A-4611-8FFB-7475C4C6401E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
+    <ProjectName>Engine - Menite</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -85,9 +94,6 @@
       <AdditionalDependencies>opengl32.lib;OpenAL32.lib;glfw3.lib;glew32s.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Source\Source.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
