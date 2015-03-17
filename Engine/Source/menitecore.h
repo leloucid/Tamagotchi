@@ -67,7 +67,7 @@ typedef struct MEwindow{
 } MEwindow;
 
 /* Menite pointer */
-typedef GLvoid (*MEptr);
+typedef GLvoid (*MEEXEptr)();
 
 /**
     Menite variable and function
@@ -76,5 +76,5 @@ typedef GLvoid (*MEptr);
 extern MEwindow meniteWindow;
 
 GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title);
-GLvoid MeniteExecute();
+GLvoid MeniteExecute(MEEXEptr executefunction);
 GLvoid MeniteStop();
