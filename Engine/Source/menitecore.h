@@ -73,8 +73,14 @@ typedef GLvoid (*MEEXEptr)();
     Menite variable and function
 **/
 
+/* Menite window object */
 extern MEwindow meniteWindow;
 
+/* Initialize context */
 GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title);
+
+/* Execute game loop (with execute function for draw any game object and check any game event) */
 GLvoid MeniteExecute(MEEXEptr executefunction);
+
+/* Stop game loop */
 GLvoid MeniteStop();

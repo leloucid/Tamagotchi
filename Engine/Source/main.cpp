@@ -1,5 +1,7 @@
 #include "meniteengine.h"
 
+static int number = 0;
+
 GLvoid executefunction();
 
 int main()
@@ -13,5 +15,5 @@ int main()
 
 GLvoid executefunction()
 {
-    printf("hi, 55\n");
+    printf("hi, %d\n", number++);
 }
