@@ -2,8 +2,10 @@
 
 MEwindow meniteWindow;
 
-GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title)
+GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title, GLuint mode)
 {
+    if (mode == MENITE_DEBUG) meniteWindow.mode = MENITE_DEBUG;
+
     glfwInit();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -20,7 +22,7 @@ GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title)
     glViewport(0, 0, width, height);
 }
 
-GLvoid MeniteExecute(MEINITptr initialfunction, MEEXEptr executefunction, MEEXEptr endfunction)
+GLvoid MeniteExecute(MEEXEptr initialfunction, MEEXEptr executefunction, MEEXEptr endfunction)
 {
     initialfunction();
 

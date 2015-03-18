@@ -29,6 +29,8 @@
 /**
     Pre-processive directive
 **/
+#define MENITE_RELEASE 0
+#define MENITE_DEBUG 1
 
 /**
     Typedef
@@ -67,6 +69,7 @@ typedef struct MEwindow{
     GLuint width;
     GLuint height;
     GLchar *title;
+    GLuint mode;
 } MEwindow;
 
 /* Menite Execute function callback pointer */
@@ -80,7 +83,7 @@ typedef GLvoid (*MEEXEptr)();
 extern MEwindow meniteWindow;
 
 /* Initialize context */
-GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title);
+GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title, GLuint mode);
 
 /* Execute game loop (with execute function for draw any game object and check any game event) */
 GLvoid MeniteExecute(MEEXEptr initialfunction, MEEXEptr executefunction, MEEXEptr endfunction);
