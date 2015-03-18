@@ -44,6 +44,9 @@ typedef struct ME2Dpos
     GLfloat y;
 } ME2Dpos;
 
+/* Menite image */
+typedef unsigned char (*MEimage)();
+
 /* Menite RGB */
 typedef struct MErgb
 {
