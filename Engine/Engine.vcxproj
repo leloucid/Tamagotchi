@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="Source\menitecore.h" />
     <ClInclude Include="Source\meniteengine.h" />
+    <ClInclude Include="Source\meniteobject.h" />
     <ClInclude Include="Source\meniteshader.h" />
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ enum MEshadertype { VERTEX_SHADER, FRAGMENT_SHADER };
 
 /**
     Menite - Shader
-    Defined
+    Class Defined
 **/
 
 /* Menite Shader class */
@@ -51,5 +51,13 @@ class MEshader
                   vertexLoaded = GL_FALSE,
                   fragmentLoaded = GL_FALSE;
 };
+
+/**
+    Menite - Shader
+    Function Defined
+**/
+
+MErgb hexColortoRGB(GLchar *hexcolor);
+MErgba hexColortoRGBA(GLchar *hexcolor, GLfloat alpha);
 
 #endif MENITE_SHADER

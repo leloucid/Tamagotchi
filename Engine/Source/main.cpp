@@ -27,7 +27,7 @@ GLuint VAO, VBO, EBO;
 
 int main()
 {
-    MeniteInit(800, 600, "Menite Engine");
+    MeniteInit(800, 600, "Menite Engine", MENITE_DEBUG);
 
     MeniteExecute(initialfunction, executefunction, endfunction);
 
