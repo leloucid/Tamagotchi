@@ -15,12 +15,10 @@
 #include "menitecore.h"
 
 /**
-    Pre-processive directive
-**/
-
-/**
     Typedef
 **/
+
+/* Menite shader type */
 enum MEshadertype { VERTEX_SHADER, FRAGMENT_SHADER };
 
 /**
@@ -42,22 +40,15 @@ class MEshader
         /* Set OpenGL to use this shader program */
         GLvoid useShader();
     protected:
-        GLint success;
-        GLchar infoLog[512];
-        GLuint shaderProgram,
-               vertexShader,
-               fragmentShader;
-        GLboolean shaderIsBuilt = GL_FALSE,
-                  vertexLoaded = GL_FALSE,
-                  fragmentLoaded = GL_FALSE;
+        // Variable
+        GLint success; // Success state of compilation
+        GLchar infoLog[512]; // Info of compilation
+        GLuint shaderProgram, // Shader program
+               vertexShader, // Vertex shader
+               fragmentShader; // Fragment shader
+        GLboolean shaderIsBuilt = GL_FALSE, // Is shader program build?
+                  vertexLoaded = GL_FALSE, // Is vertex source code loaded?
+                  fragmentLoaded = GL_FALSE; // Is fragment source code loaded?
 };
-
-/**
-    Menite - Shader
-    Function Defined
-**/
-
-MErgb hexColortoRGB(GLchar *hexcolor);
-MErgba hexColortoRGBA(GLchar *hexcolor, GLfloat alpha);
 
 #endif MENITE_SHADER

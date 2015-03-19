@@ -13,12 +13,14 @@
   <ItemGroup>
     <ClInclude Include="Source\menitecore.h" />
     <ClInclude Include="Source\meniteengine.h" />
-    <ClInclude Include="Source\meniteobject.h" />
+    <ClInclude Include="Source\menitemath.h" />
+    <ClInclude Include="Source\meniterobject.h" />
     <ClInclude Include="Source\meniteshader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\menitecore.cpp" />
+    <ClCompile Include="Source\meniteobject.cpp" />
     <ClCompile Include="Source\meniteshader.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

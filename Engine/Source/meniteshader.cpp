@@ -4,9 +4,11 @@ MEshader::MEshader(const GLchar *vertexSource, const GLchar *fragmentSource)
 {
     this->vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(this->vertexShader, 1, &vertexSource, nullptr);
+    if (meniteWindow.mode == MENITE_DEBUG) puts("Vertex source code loaded.");
 
     this->fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(this->fragmentShader, 1, &fragmentSource, nullptr);
+    if (meniteWindow.mode == MENITE_DEBUG) puts("Fragment source code loaded.");
 
     this->vertexLoaded = GL_TRUE;
     this->fragmentLoaded = GL_TRUE;
@@ -20,11 +22,13 @@ GLvoid MEshader::insertSource(MEshadertype type, GLchar *source)
             if (!this->vertexLoaded) this->vertexShader = glCreateShader(GL_VERTEX_SHADER);
             glShaderSource(this->vertexShader, 1, &source, nullptr);
             this->vertexLoaded = GL_TRUE;
+            if (meniteWindow.mode == MENITE_DEBUG) puts("Vertex source code loaded.");
             break;
         case FRAGMENT_SHADER:
             if (!this->fragmentLoaded) this->fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
             glShaderSource(this->fragmentShader, 1, &source, nullptr);
             this->fragmentLoaded = GL_TRUE;
+            if (meniteWindow.mode == MENITE_DEBUG) puts("Fragment source code loaded.");
             break;
     }
 }
