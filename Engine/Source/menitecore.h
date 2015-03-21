@@ -19,6 +19,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <thread>
 #include <conio.h>
 
 /* GLEW */
@@ -71,9 +72,6 @@ typedef struct MErgba
 /* Menite window */
 typedef struct MEwindow{
     GLFWwindow *window;
-    GLuint width;
-    GLuint height;
-    GLchar *title;
     GLuint mode;
 } MEwindow;
 
@@ -89,6 +87,8 @@ extern MEwindow meniteWindow;
 
 /* Initialize context */
 GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title, GLuint mode);
+
+GLvoid MeniteSwapFullscreen();
 
 /* Execute game loop (with execute function for draw any game object and check any game event) */
 GLvoid MeniteExecute(MEEXEptr executefunction);

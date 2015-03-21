@@ -7,24 +7,44 @@ GLvoid endfunction();
 
 GLuint VAO, VBO, EBO;
 
+GLboolean build = GL_FALSE;
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+    // When a user presses the escape key, we set the WindowShouldClose property to true, 
+    // closing the application
+    if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+    {
+        build = GL_FALSE;
+        MeniteSwapFullscreen();
+        glfwSetKeyCallback(meniteWindow.window, key_callback);
+    }
+    else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+
 int main()
 {
     MeniteInit(800, 600, "Menite Engine", MENITE_DEBUG);
+
+    glfwSetKeyCallback(meniteWindow.window, key_callback);
 
     MeniteExecute(executefunction);
 
     return 0;
 }
 
+
+
 GLvoid executefunction()
 {
     // Initialize static variable
     static int number = 0;
-    static GLboolean build = GL_FALSE;
-    static MEshader shader("../Shader/simpleVertexShader.vert", "../Shader/simpleFragmentShader.frag");
-
+    
     if (!build)
     {
+        MEshader shader("../Shader/simpleVertexShader.vert", "../Shader/simpleFragmentShader.frag");
         GLfloat vertices[] = {
             0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f,  // Top Right
             0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  // Bottom Right
@@ -58,6 +78,8 @@ GLvoid executefunction()
         glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO
 
         build = GL_TRUE;
+
+        shader.useShader();
     }
 
     // Do some condition
@@ -73,7 +95,7 @@ GLvoid executefunction()
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Draw our first triangle
-    shader.useShader();
+    
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

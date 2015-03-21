@@ -22,6 +22,22 @@ GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title, GLuint mode)
     glViewport(0, 0, width, height);
 }
 
+GLvoid MeniteSwapFullscreen()
+{
+    const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    
+    GLFWwindow *twindow = glfwCreateWindow(mode->width, mode->height, "Menite Engine", glfwGetPrimaryMonitor(), nullptr);
+    glfwDestroyWindow(meniteWindow.window);
+    meniteWindow.window = twindow;
+
+    glfwMakeContextCurrent(meniteWindow.window);
+
+    glewExperimental = GL_TRUE;
+    glewInit();
+
+    glViewport(0, 0, mode->width, mode->height);
+}
+
 GLvoid MeniteExecute(MEEXEptr executefunction)
 {
     while (!glfwWindowShouldClose(meniteWindow.window))
