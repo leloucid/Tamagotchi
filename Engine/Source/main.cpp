@@ -1,24 +1,6 @@
 /* Include Menite engine */
 #include "meniteengine.h"
 
-// Shaders
-const GLchar* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"layout (location = 1) in vec3 color;\n"
-"out vec3 MEcolor;\n"
-"void main()\n"
-"{\n"
-"gl_Position = vec4(position, 1.0);\n"
-"MEcolor = color;\n"
-"}\0";
-const GLchar* fragmentShaderSource = "#version 330 core\n"
-"in vec3 MEcolor;\n"
-"out vec4 color;\n"
-"void main()\n"
-"{\n"
-"color = vec4(MEcolor, 1.0f);\n"
-"}\0";
-
 GLvoid initialfunction();
 GLvoid executefunction();
 GLvoid endfunction();
@@ -73,7 +55,7 @@ GLvoid executefunction()
 {
     // Initialize static variable
     static int number = 0;
-    static MEshader shader(vertexShaderSource, fragmentShaderSource);
+    static MEshader shader("../Shader/simpleVertexShader.vert", "../Shader/simpleFragmentShader.frag");
 
     // Do some condition
     if (floor(glfwGetTime()) >= number)
