@@ -22,10 +22,8 @@ GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title, GLuint mode)
     glViewport(0, 0, width, height);
 }
 
-GLvoid MeniteExecute(MEEXEptr initialfunction, MEEXEptr executefunction, MEEXEptr endfunction)
+GLvoid MeniteExecute(MEEXEptr executefunction)
 {
-    initialfunction();
-
     while (!glfwWindowShouldClose(meniteWindow.window))
     {
         glfwPollEvents();
@@ -34,8 +32,6 @@ GLvoid MeniteExecute(MEEXEptr initialfunction, MEEXEptr executefunction, MEEXEpt
 
         glfwSwapBuffers(meniteWindow.window);
     }
-
-    endfunction();
 
     glfwTerminate();
 }

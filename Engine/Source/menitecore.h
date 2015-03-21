@@ -91,7 +91,7 @@ extern MEwindow meniteWindow;
 GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title, GLuint mode);
 
 /* Execute game loop (with execute function for draw any game object and check any game event) */
-GLvoid MeniteExecute(MEEXEptr initialfunction, MEEXEptr executefunction, MEEXEptr endfunction);
+GLvoid MeniteExecute(MEEXEptr executefunction);
 
 /* Stop game loop */
 GLvoid MeniteStop();
