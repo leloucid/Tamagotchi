@@ -24,7 +24,4 @@
 /* Shader */
 #include "meniteshader.h"
 
-/* Object */
-#include "meniterobject.h"
-
 #endif MENITE_ENGINE
