@@ -1,6 +1,6 @@
 #include "meniteshader.h"
 
-MEshader::MEshader(const GLchar *vertexFile, const GLchar *fragmentFile)
+MeniteShader::MeniteShader(const GLchar *vertexFile, const GLchar *fragmentFile)
 {
     const GLchar *vertexSource, *fragmentSource;
     std::string vertexSourceBuffer, fragmentSourceBuffer;
@@ -63,12 +63,12 @@ MEshader::MEshader(const GLchar *vertexFile, const GLchar *fragmentFile)
     glDeleteShader(fragmentShader);
 }
 
-GLvoid MEshader::useShader()
+GLvoid MeniteShader::useShader()
 {
     glUseProgram(this->shaderProgram);
 }
 
-MEshader::~MEshader()
+MeniteShader::~MeniteShader()
 {
     glDeleteProgram(this->shaderProgram);
 }

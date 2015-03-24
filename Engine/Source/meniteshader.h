@@ -15,30 +15,23 @@
 #include "menitecore.h"
 
 /**
-    Typedef
+    Menite Shader class
 **/
 
-/**
-    Menite - Shader
-    Class Defined
-**/
-
-/* Menite Shader class */
-class MEshader
+class MeniteShader
 {
     public:
         // Constructor
-        MEshader(const GLchar* vertexFile, const GLchar* fragmentFile);
+        MeniteShader(const GLchar* vertexFile, const GLchar* fragmentFile);
         // Deconstuctor
-        ~MEshader();
+        ~MeniteShader();
         // Function
-        /* Set OpenGL to use this shader program */
         GLvoid useShader();
     protected:
         // Variable
-        GLint success; // Success state of compilation
-        GLchar infoLog[512]; // Info of compilation
-        GLuint shaderProgram; // Shader program
+        GLint success;
+        GLchar infoLog[512];
+        GLuint shaderProgram;
 };
 
 #endif MENITE_SHADER

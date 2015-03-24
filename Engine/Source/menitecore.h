@@ -13,7 +13,6 @@
     Include library
 **/
 
-/* Standard library */
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -32,68 +31,29 @@
 /**
     Pre-processive directive
 **/
+
+#define MENITE_SET_DEBUGMODE 0
 #define MENITE_RELEASE 0
 #define MENITE_DEBUG 1
 
-/**
-    Typedef
-**/
+#define MENITE_SET_SCREENMODE 1
+#define MENITE_FULLSCREEN 0
+#define MENITE_WINDOWED 1
 
-/* Menite 2D Position */
-typedef struct ME2Dpos
-{
-    ME2Dpos() : x(0.0f), y(0.0f) {}
-    GLfloat x;
-    GLfloat y;
-} ME2Dpos;
-
-/* Menite image */
-typedef unsigned char (*MEimage)();
-
-/* Menite RGB */
-typedef struct MErgb
-{
-    MErgb() : r(0.0f), g(0.0f), b(0.0f) {}
-    GLfloat r;
-    GLfloat g;
-    GLfloat b;
-} MErgb;
-
-/* Menite RGB (with alpha) */
-typedef struct MErgba
-{
-    MErgba() : r(0.0f), g(0.0f), b(0.0f), a(1.0f) {}
-    GLfloat r;
-    GLfloat g;
-    GLfloat b;
-    GLfloat a;
-} MErgba;
-
-/* Menite window */
-typedef struct MEwindow{
-    GLFWwindow *window;
-    GLuint mode;
-} MEwindow;
-
-/* Menite Execute function callback pointer */
-typedef GLvoid (*MEEXEptr)();
+#define MENITE_SET_WINDOW_WIDTH 2
+#define MENITE_SET_WINDOW_HEIGHT 3
 
 /**
-    Menite variable and function
+    Global scope function and variable
 **/
 
-/* Menite window object */
-extern MEwindow meniteWindow;
-
-/* Initialize context */
-GLvoid MeniteInit(GLuint width, GLuint height, GLchar* title, GLuint mode);
-
-GLvoid MeniteSwapFullscreen();
-
-/* Execute game loop (with execute function for draw any game object and check any game event) */
-GLvoid MeniteExecute(MEEXEptr executefunction);
-
-/* Stop game loop */
+GLvoid MeniteInit(GLchar *title);
+GLvoid MeniteSetup(GLuint option, GLuint value);
+GLvoid MeniteChangeScreenMode(GLuint mode);
+GLvoid MeniteChangeResolution(GLuint width, GLuint height);
+GLvoid MeniteExecute();
 GLvoid MeniteStop();
+GLboolean Menite_isDebugMode();
+GLFWwindow *MeniteGetWindow();
 
 #endif MENITE_CORE

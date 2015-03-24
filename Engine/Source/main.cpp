@@ -16,21 +16,30 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
     {
         build = GL_FALSE;
-        MeniteSwapFullscreen();
-        glfwSetKeyCallback(meniteWindow.window, key_callback);
+        MeniteSetup(MENITE_SET_SCREENMODE, MENITE_FULLSCREEN);
+        glfwSetKeyCallback(MeniteGetWindow(), key_callback);
     }
     else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
+        MeniteStop();
 }
 
 
 int main()
 {
-    MeniteInit(800, 600, "Menite Engine", MENITE_DEBUG);
+    MeniteInit("Menite");
 
-    glfwSetKeyCallback(meniteWindow.window, key_callback);
+    glfwSetKeyCallback(MeniteGetWindow(), key_callback);
 
-    MeniteExecute(executefunction);
+    while (!glfwWindowShouldClose(MeniteGetWindow()))
+    {
+        glfwPollEvents();
+
+        executefunction();
+
+        glfwSwapBuffers(MeniteGetWindow());
+    }
+
+    glfwTerminate();
 
     return 0;
 }
@@ -44,7 +53,7 @@ GLvoid executefunction()
     
     if (!build)
     {
-        MEshader shader("../Shader/simpleVertexShader.vert", "../Shader/simpleFragmentShader.frag");
+        MeniteShader shader("../Shader/simpleVertexShader.vert", "../Shader/simpleFragmentShader.frag");
         GLfloat vertices[] = {
             0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f,  // Top Right
             0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  // Bottom Right
@@ -100,7 +109,7 @@ GLvoid executefunction()
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
-    if (glfwWindowShouldClose(meniteWindow.window))
+    if (glfwWindowShouldClose(MeniteGetWindow()))
     {
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
