@@ -1,74 +1,55 @@
+#include <iostream>
 #include "meniteshader.h"
 
-MeniteShader::MeniteShader(const GLchar *vertexFile, const GLchar *fragmentFile)
+MeniteShader::MeniteShader(const GLchar *vertexSource, const GLchar *fragmentSource)
 {
-    const GLchar *vertexSource, *fragmentSource;
-    std::string vertexSourceBuffer, fragmentSourceBuffer;
-    GLuint vertexShader, fragmentShader;
+    GLuint vertexshader = glCreateShader(GL_VERTEX_SHADER), 
+           fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
+    GLint success;
+    GLchar complieinfo[512];
+    this->shaderprogram = glCreateProgram();
 
-    try
+    glShaderSource(vertexshader, 1, &vertexSource, NULL);
+    glCompileShader(vertexshader);
+    glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &success);
+    if (!success)
     {
-        std::ifstream vertex(vertexFile);
-        std::ifstream fragment(fragmentFile);
-        std::stringstream bvertex, bfragment;
-
-        bvertex << vertex.rdbuf();
-        bfragment << fragment.rdbuf();
-
-        vertex.close();
-        fragment.close();
-
-        vertexSourceBuffer = bvertex.str();
-        fragmentSourceBuffer = bfragment.str();
+        glGetShaderInfoLog(vertexshader, 512, NULL, complieinfo);
+        puts("Error: vertex shader compile failed.");
+        puts(complieinfo);
     }
-    catch (std::exception e)
+    else glAttachShader(this->shaderprogram, vertexshader);
+
+    glShaderSource(fragmentshader, 1, &fragmentSource, NULL);
+    glCompileShader(fragmentshader);
+    glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &success);
+    if (!success)
     {
-        puts("Error: Shader file not successfully read.");
+        glGetShaderInfoLog(fragmentshader, 512, NULL, complieinfo);
+        puts("Error: fragment shader compile failed.");
+        puts(complieinfo);
     }
-
-    vertexSource = vertexSourceBuffer.c_str();
-    fragmentSource = fragmentSourceBuffer.c_str();
-
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexSource, nullptr);
-
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentSource, nullptr);
-
-    this->shaderProgram = glCreateProgram();
-
-    glCompileShader(vertexShader);
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &this->success);
-    if (!this->success)
+    else glAttachShader(this->shaderprogram, fragmentshader);
+    
+    glLinkProgram(this->shaderprogram);
+    glGetProgramiv(shaderprogram, GL_LINK_STATUS, &success);
+    if (!success)
     {
-        glGetShaderInfoLog(vertexShader, 512, NULL, this->infoLog);
-        puts("Error: Vertex shader compilation failed.");
-        puts(this->infoLog);
+        glGetProgramInfoLog(shaderprogram, 512, NULL, complieinfo);
+        puts("Error: fragment shader compile failed.");
+        puts(complieinfo);
     }
-    else glAttachShader(this->shaderProgram, vertexShader);
 
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &this->success);
-    if (!this->success)
-    {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, this->infoLog);
-        puts("Error: Fragment shader compilation failed.");
-        puts(this->infoLog);
-    }
-    else glAttachShader(this->shaderProgram, fragmentShader);
-
-    glLinkProgram(this->shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    glDeleteShader(vertexshader);
+    glDeleteShader(fragmentshader);
 }
 
 GLvoid MeniteShader::useShader()
 {
-    glUseProgram(this->shaderProgram);
+    glUseProgram(this->shaderprogram);
 }
 
 MeniteShader::~MeniteShader()
 {
-    glDeleteProgram(this->shaderProgram);
+    glDeleteProgram(this->shaderprogram);
 }
