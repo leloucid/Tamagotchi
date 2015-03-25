@@ -1,6 +1,7 @@
 #include "menitecore.h"
 
 GLFWwindow *window;
+GLuint windowwidth, windowheight;
 
 GLvoid MeniteInit(GLuint width, GLuint height, GLchar *title)
 {
@@ -10,6 +11,9 @@ GLvoid MeniteInit(GLuint width, GLuint height, GLchar *title)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+    windowwidth = width;
+    windowheight = height;
 
     window = glfwCreateWindow(width, height, title, NULL, NULL);
     glfwMakeContextCurrent(window);
@@ -23,4 +27,14 @@ GLvoid MeniteInit(GLuint width, GLuint height, GLchar *title)
 GLFWwindow *MeniteGetWindow()
 {
     return window;
+}
+
+GLuint MeniteGetWindowWidth()
+{
+    return windowwidth;
+}
+
+GLuint MeniteGetWindowHeight()
+{
+    return windowheight;
 }

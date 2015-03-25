@@ -12,6 +12,7 @@ class MeniteShader
         MeniteShader(const GLchar *vertexSource, const GLchar *fragmentSource);
         ~MeniteShader();
         GLvoid useShader();
+        GLuint getShaderProgram();
     protected:
         GLuint shaderprogram;
 };

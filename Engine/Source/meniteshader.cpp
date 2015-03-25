@@ -49,6 +49,11 @@ GLvoid MeniteShader::useShader()
     glUseProgram(this->shaderprogram);
 }
 
+GLuint MeniteShader::getShaderProgram()
+{
+    return this->shaderprogram;
+}
+
 MeniteShader::~MeniteShader()
 {
     glDeleteProgram(this->shaderprogram);

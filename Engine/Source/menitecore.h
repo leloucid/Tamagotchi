@@ -7,5 +7,7 @@
 
 GLvoid MeniteInit(GLuint width, GLuint height, GLchar *title);
 GLFWwindow *MeniteGetWindow();
+GLuint MeniteGetWindowWidth();
+GLuint MeniteGetWindowHeight();
 
 #endif MENITE_CORE

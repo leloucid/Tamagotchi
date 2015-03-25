@@ -13,16 +13,30 @@
 
 const GLchar *Sprite2DVertexSource = "#version 330 core\n"
     "layout (location = 0) in vec2 position;\n"
+    "layout (location = 1) in vec2 texposition;\n"
+    "out vec2 texPosition;\n"
+    "uniform vec2 inPosition;\n"
+    "uniform vec2 inSize;\n"
     "void main()\n"
     "{\n"
-    "gl_Position = vec4(position, 0.0, 1.0);\n"
+    "gl_Position = vec4(((position.x + 1) * inSize.x) + (inPosition.x * 2) - 1, ((position.y - 1) * inSize.y) - (inPosition.y * 2) + 1, 0.0, 1.0);\n"
+    "texPosition = texposition;\n"
     "}\0";
 
 const GLchar *Sprite2DFragmentSource = "#version 330 core\n"
+    "in vec2 texPosition;\n"
     "out vec4 color;\n"
+    "uniform vec3 inColor;\n"
+    "uniform bool usedTexture;\n"
+    "uniform sampler2D inTexture;\n"
     "void main()\n"
     "{\n"
-    "color = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "if(usedTexture)\n"
+    "{\n"
+    "color = texture(inTexture, texPosition);\n"
+    "} else {\n"
+    "color = vec4(inColor, 1.0f);\n"
+    "}\n"
     "}\0";
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -34,7 +48,8 @@ int main()
     glfwSetKeyCallback(MeniteGetWindow(), key_callback);
 
     MeniteShader Sprite2DShader(Sprite2DVertexSource, Sprite2DFragmentSource);
-    Menite2DSprite MyFirstSprite(Sprite2DShader);
+    Menite2DSprite MySprite(200, 150, 400, 300, "#FF0044", Sprite2DShader);
+    MySprite.loadTexture("../Image/container.jpg");
 
     while (!glfwWindowShouldClose(MeniteGetWindow()))
     {
@@ -43,11 +58,12 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        MyFirstSprite.Draw();
+        MySprite.Draw();
         
         glfwSwapBuffers(MeniteGetWindow());
     }
 
+    glfwTerminate();
     return 0;
 }
 
