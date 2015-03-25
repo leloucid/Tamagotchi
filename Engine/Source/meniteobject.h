@@ -15,19 +15,19 @@ typedef struct MeniteRGB
 class Menite2DSprite
 {
     public:
-        Menite2DSprite(GLuint pos_x, GLuint pos_y, GLuint width, GLuint height, GLchar *hexcolor, MeniteShader &shader);
+        Menite2DSprite() {};
+        Menite2DSprite(GLuint pos_x, GLuint pos_y, GLuint width, GLuint height, GLchar *hexcolor);
         ~Menite2DSprite();
         GLvoid loadTexture(const char *texturePath);
-        GLvoid Draw();
+        GLvoid Draw(MeniteShader &shader);
     protected:
         GLuint VAO, VBO, EBO,
                pos_x, pos_y,
                width, height;
-        GLchar *hexcolor = NULL;
+        MeniteRGB color;
         GLboolean textureLoaded = GL_FALSE;
         GLuint texture = NULL;
-        MeniteShader shader;
-        GLvoid initData();
+        GLboolean isInitData = GL_FALSE;
 };
 
 MeniteRGB HextoRGBColor(GLchar *hexcolor);

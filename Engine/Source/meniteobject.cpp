@@ -6,51 +6,13 @@
 #include "meniteobject.h"
 #include "menitecore.h"
 
-GLvoid Menite2DSprite::initData()
+Menite2DSprite::Menite2DSprite(GLuint pos_x, GLuint pos_y, GLuint width, GLuint height, GLchar *hexcolor)
 {
-    GLfloat vertices[] = {
-        -1.0f,  1.0f,  0.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,  0.0f,
-        -1.0f, -1.0f,  0.0f,  0.0f
-    };
-    GLuint indices[] = {
-        0, 1, 2,
-        0, 2, 3 
-    };
-
-    glGenVertexArrays(1, &this->VAO);
-    glGenBuffers(1, &this->VBO);
-    glGenBuffers(1, &this->EBO);
-    
-    glBindVertexArray(this->VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
-}
-
-Menite2DSprite::Menite2DSprite(GLuint pos_x, GLuint pos_y, GLuint width, GLuint height, GLchar *hexcolor, MeniteShader &shader)
-{
-    this->shader = shader;
-    this->hexcolor = hexcolor;
+    this->color = HextoRGBColor(hexcolor);
     this->pos_x = pos_x;
     this->pos_y = pos_y;
     this->width = width;
     this->height = height;
-    this->initData();
 }
 
 GLvoid Menite2DSprite::loadTexture(const char *texturePath)
@@ -69,22 +31,58 @@ GLvoid Menite2DSprite::loadTexture(const char *texturePath)
     this->textureLoaded = GL_TRUE;
 }
 
-GLvoid Menite2DSprite::Draw()
+GLvoid Menite2DSprite::Draw(MeniteShader &shader)
 {
-    this->shader.useShader();
+    if (!this->isInitData)
+    {
+        GLfloat vertices[] = {
+            -1.0f,  1.0f,  0.0f,  1.0f,
+             1.0f,  1.0f,  1.0f,  1.0f,
+             1.0f, -1.0f,  1.0f,  0.0f,
+            -1.0f, -1.0f,  0.0f,  0.0f
+        };
+        GLuint indices[] = {
+            0, 1, 2,
+            0, 2, 3
+        };
 
-    MeniteRGB color = HextoRGBColor(this->hexcolor);
-    glUniform3f(glGetUniformLocation(this->shader.getShaderProgram(), "inColor"), color.red / 255.0f, color.green / 255.0f, color.blue / 255.0f);
+        glGenVertexArrays(1, &this->VAO);
+        glGenBuffers(1, &this->VBO);
+        glGenBuffers(1, &this->EBO);
 
-    glUniform2f(glGetUniformLocation(this->shader.getShaderProgram(), "inPosition"), this->pos_x / (GLfloat)MeniteGetWindowWidth(), this->pos_y / (GLfloat)MeniteGetWindowHeight());
-    glUniform2f(glGetUniformLocation(this->shader.getShaderProgram(), "inSize"), this->width / (GLfloat)MeniteGetWindowWidth(), this->height / (GLfloat)MeniteGetWindowHeight());
+        glBindVertexArray(this->VAO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(1);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glBindVertexArray(0);
+
+        this->isInitData = GL_TRUE;
+    }
+    shader.useShader();
+
+    glUniform3f(glGetUniformLocation(shader.getShaderProgram(), "inColor"), this->color.red / 255.0f, this->color.green / 255.0f, this->color.blue / 255.0f);
+
+    glUniform2f(glGetUniformLocation(shader.getShaderProgram(), "inPosition"), this->pos_x / (GLfloat)MeniteGetWindowWidth(), this->pos_y / (GLfloat)MeniteGetWindowHeight());
+    glUniform2f(glGetUniformLocation(shader.getShaderProgram(), "inSize"), this->width / (GLfloat)MeniteGetWindowWidth(), this->height / (GLfloat)MeniteGetWindowHeight());
 
     if (this->textureLoaded)
     {
         glBindTexture(GL_TEXTURE_2D, this->texture);
-        glUniform1i(glGetUniformLocation(this->shader.getShaderProgram(), "usedTexture"), GL_TRUE);
+        glUniform1i(glGetUniformLocation(shader.getShaderProgram(), "usedTexture"), GL_TRUE);
     }
-    else glUniform1i(glGetUniformLocation(this->shader.getShaderProgram(), "usedTexture"), GL_FALSE);
+    else glUniform1i(glGetUniformLocation(shader.getShaderProgram(), "usedTexture"), GL_FALSE);
 
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

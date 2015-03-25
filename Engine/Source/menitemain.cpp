@@ -11,6 +11,8 @@
 #include "meniteshader.h"
 #include "meniteobject.h"
 
+#include "game_pawn.h"
+
 const GLchar *Sprite2DVertexSource = "#version 330 core\n"
     "layout (location = 0) in vec2 position;\n"
     "layout (location = 1) in vec2 texposition;\n"
@@ -48,8 +50,10 @@ int main()
     glfwSetKeyCallback(MeniteGetWindow(), key_callback);
 
     MeniteShader Sprite2DShader(Sprite2DVertexSource, Sprite2DFragmentSource);
-    Menite2DSprite MySprite(200, 150, 400, 300, "#FF0044", Sprite2DShader);
-    MySprite.loadTexture("../Image/container.jpg");
+
+    std::vector<HTSpawn> MySprite;
+    MySprite.push_back(HTSpawn(200, 150, 400, 300, "#FF0044", "../Image/container.jpg", 3, 3));
+    MySprite.push_back(HTSpawn(0, 0, 400, 300, "#FF0044", NULL, 3, 3));
 
     while (!glfwWindowShouldClose(MeniteGetWindow()))
     {
@@ -58,7 +62,7 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        MySprite.Draw();
+        for (std::vector<HTSpawn>::iterator it = MySprite.begin(); it != MySprite.end(); it++) it->Draw(Sprite2DShader);
         
         glfwSwapBuffers(MeniteGetWindow());
     }
