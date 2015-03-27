@@ -11,10 +11,6 @@
 *.userprefs
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
 x64/
 x86/
 build/
@@ -38,6 +34,9 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+*.exe
+*.idb
+*.tlog
 *_i.c
 *_p.c
 *_i.h
