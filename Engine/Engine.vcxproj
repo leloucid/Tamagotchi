@@ -11,17 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\game_pawn.cpp" />
-    <ClCompile Include="Source\menitecore.cpp" />
-    <ClCompile Include="Source\menitemain.cpp" />
-    <ClCompile Include="Source\meniteobject.cpp" />
-    <ClCompile Include="Source\meniteshader.cpp" />
+    <ClCompile Include="Source\game.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\resourcemanager.cpp" />
+    <ClCompile Include="Source\shader.cpp" />
+    <ClCompile Include="Source\spriterender.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\game_pawn.h" />
-    <ClInclude Include="Source\menitecore.h" />
-    <ClInclude Include="Source\meniteobject.h" />
-    <ClInclude Include="Source\meniteshader.h" />
+    <ClInclude Include="Source\game.h" />
+    <ClInclude Include="Source\resourcemanager.h" />
+    <ClInclude Include="Source\shader.h" />
+    <ClInclude Include="Source\spriterender.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\sprite.frag" />
+    <None Include="Shader\sprite.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5638C291-0B9A-4611-8FFB-7475C4C6401E}</ProjectGuid>

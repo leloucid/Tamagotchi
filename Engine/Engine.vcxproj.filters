@@ -13,36 +13,47 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Shader">
+      <UniqueIdentifier>{3553553f-baa7-4abe-ab3f-1f40e7ddebca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\menitemain.cpp">
+    <ClCompile Include="Source\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\menitecore.cpp">
+    <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\meniteshader.cpp">
+    <ClCompile Include="Source\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\meniteobject.cpp">
+    <ClCompile Include="Source\resourcemanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\game_pawn.cpp">
+    <ClCompile Include="Source\spriterender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\menitecore.h">
+    <ClInclude Include="Source\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\meniteshader.h">
+    <ClInclude Include="Source\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\meniteobject.h">
+    <ClInclude Include="Source\resourcemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\game_pawn.h">
+    <ClInclude Include="Source\spriterender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\sprite.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="Shader\sprite.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
