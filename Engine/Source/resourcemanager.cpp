@@ -34,6 +34,7 @@ Texture2D ResourceManager::GetTexture(std::string name)
 GLvoid ResourceManager::Clear()
 {
     for (auto iter : Shaders) glDeleteProgram(iter.second.ID);
+    for (auto iter : Textures) glDeleteTextures(1, &iter.second.ID);
 }
 
 Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *vFragmentFile)

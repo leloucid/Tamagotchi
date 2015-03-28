@@ -1,4 +1,5 @@
 #include "game.h"
+#include "resourcemanager.h"
 
 Game Hittheshapes(1024, 768);
 
@@ -17,7 +18,11 @@ int main()
     glewExperimental = GL_TRUE;
     glewInit();
 
+    // Configure OpenGL
     glViewport(0, 0, Hittheshapes.windowWidth, Hittheshapes.windowHeight);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // DeltaTime
     GLfloat currentFrame;
@@ -49,6 +54,7 @@ int main()
         glfwSwapBuffers(window);
     }
 
+    ResourceManager::Clear();
     glfwTerminate();
     return 0;
 }
