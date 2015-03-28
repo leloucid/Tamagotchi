@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game Hittheshapes(800, 600);
+Game Hittheshapes(1024, 768);
 
 int main()
 {
@@ -11,13 +11,13 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Hit the shapes!", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(Hittheshapes.windowWidth, Hittheshapes.windowHeight, "Hit the shapes!", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
     glewInit();
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, Hittheshapes.windowWidth, Hittheshapes.windowHeight);
 
     // DeltaTime
     GLfloat currentFrame;

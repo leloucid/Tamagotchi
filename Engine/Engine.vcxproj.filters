@@ -33,6 +33,9 @@
     <ClCompile Include="Source\spriterender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\game.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\spriterender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,12 +16,14 @@
     <ClCompile Include="Source\resourcemanager.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\spriterender.cpp" />
+    <ClCompile Include="Source\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\resourcemanager.h" />
     <ClInclude Include="Source\shader.h" />
     <ClInclude Include="Source\spriterender.h" />
+    <ClInclude Include="Source\texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\sprite.frag" />

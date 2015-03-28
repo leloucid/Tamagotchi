@@ -25,8 +25,6 @@ class Game
         GLuint Currenttheme;
         GameMode Currentmode;
         GLuint score;
-        // Game Configure
-        GLuint windowWidth, windowHeight;
         //std::vector<GameTheme> Themes;
         //std::vector<GameMode> Mode;
         //std::vector<GamePawn> Pawn;
@@ -42,6 +40,8 @@ class Game
         GLvoid SpawnPawn();
         GLvoid UpdatePawn(GLfloat dt);
     public:
+        // Game Configure
+        GLuint windowWidth, windowHeight;
         // Constructor/Deconstructor
         Game(GLuint width, GLuint height);
         ~Game();
