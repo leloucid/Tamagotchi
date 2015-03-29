@@ -36,6 +36,9 @@
     <ClCompile Include="Source\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\textrender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\game.h">
@@ -53,12 +56,21 @@
     <ClInclude Include="Source\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\textrender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\sprite.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="Shader\sprite.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="Shader\text.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="Shader\text.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
   </ItemGroup>
