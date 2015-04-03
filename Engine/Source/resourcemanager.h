@@ -29,6 +29,8 @@ class ResourceManager
         static Texture2D LoadTexture(const GLchar *file, GLboolean alpha, std::string name);
         // Get a stored texture.
         static Texture2D GetTexture(std::string name);
+        // De-allocate texture.
+        static GLvoid DeleteTexture(std::string name);
         // De-allocates all load resources.
         static GLvoid Clear();
 };

@@ -31,6 +31,11 @@ Texture2D ResourceManager::GetTexture(std::string name)
     return Textures[name];
 }
 
+GLvoid ResourceManager::DeleteTexture(std::string name)
+{
+    glDeleteTextures(1, &Textures[name].ID);
+}
+
 GLvoid ResourceManager::Clear()
 {
     for (auto iter : Shaders) glDeleteProgram(iter.second.ID);
