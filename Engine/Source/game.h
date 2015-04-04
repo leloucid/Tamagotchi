@@ -2,6 +2,11 @@
 #define GAME
 
 #include <vector>
+#include <cstdlib>
+#include <cmath>
+
+// debug
+#include <iostream>
 
 #define GLEW_STATIC
 #include <GL\glew.h>
@@ -12,10 +17,11 @@
 
 //#include "game_theme.h"
 //#include "game_mode.h"
-//#include "game_pawn.h"
+#include "game_pawn.h"
 
-enum GameLevel { MAIN_MENU, THEME, MODE, GAME };
+enum GameLevel { MENU_LV, THEME_LV, MODE_LV, PLAY_LV };
 enum GameMode { TIME_ATTACK, ENDLESS };
+enum PlayState { PLAY, PAUSE, END };
 
 class Game
 {
@@ -24,10 +30,12 @@ class Game
         GameLevel Currentlevel;
         GLuint Currenttheme;
         GameMode Currentmode;
+        PlayState CurrentPlayState;
         GLuint score;
+        GLboolean key[1024], keyprocessed[1024];
         //std::vector<GameTheme> Themes;
         //std::vector<GameMode> Mode;
-        //std::vector<GamePawn> Pawn;
+        std::vector<GamePawn> Pawn;
         // Load level/theme/mode (use before game level)
         GLvoid LoadTheme();
         GLvoid LoadLevel();
@@ -50,7 +58,7 @@ class Game
         // Initialize game theme
         GLvoid LoadGameTheme(GLchar *PathToGameTheme);
         // GameLoop
-        GLvoid DetectInput(GLfloat dt);
+        GLvoid ProcessInput();
         GLvoid Update(GLfloat dt);
         GLvoid Render(GLfloat dt);
         // Reset
