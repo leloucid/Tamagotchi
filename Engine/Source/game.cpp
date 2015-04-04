@@ -7,7 +7,7 @@
 SpriteRender *SpriteRenderer;
 TextRender *TextRenderer;
 
-Game::Game(GLuint width, GLuint heigth) : windowWidth(width), windowHeight(heigth) ,Currentlevel(MAIN_MENU), Currenttheme(0), score(0)
+Game::Game(GLuint width, GLuint heigth) : windowWidth(width), windowHeight(heigth) ,Currentlevel(MENU_LV), Currenttheme(0), score(0)
 {
 
 }
@@ -15,6 +15,7 @@ Game::Game(GLuint width, GLuint heigth) : windowWidth(width), windowHeight(heigt
 Game::~Game()
 {
     delete SpriteRenderer;
+    delete TextRenderer;
 }
 
 GLvoid Game::init()
@@ -35,18 +36,60 @@ GLvoid Game::init()
     SpriteRenderer = new SpriteRender(ResourceManager::GetShader("sprite"));
     TextRenderer = new TextRender(this->windowWidth, this->windowHeight);
     TextRenderer->Load("../Font/supermarket.ttf", 128);
+
+    // Create GamePawn
+    this->Pawn.push_back(GamePawn(8, 2, glm::vec2(35, 42), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
+    this->Pawn.push_back(GamePawn(12, 3, glm::vec2(535, 352), glm::vec2(100, 100), ResourceManager::GetTexture("pawn3")));
+    this->Pawn.push_back(GamePawn(7, 6, glm::vec2(145, 215), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
+    this->Pawn.push_back(GamePawn(9, 5, glm::vec2(685, 231), glm::vec2(100, 100), ResourceManager::GetTexture("pawn3")));
+    this->Pawn.push_back(GamePawn(3, 2, glm::vec2(456, 565), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
+    this->Pawn.push_back(GamePawn(6, 4, glm::vec2(875, 555), glm::vec2(100, 100), ResourceManager::GetTexture("pawn2")));
+}
+
+GLvoid Game::Update(GLfloat dt)
+{
+    static GLfloat timer = 0.0f;
+
+    timer += dt;
+    printf("%.3f\n", timer);
+
+    for (GamePawn &itr : this->Pawn)
+    {
+        if (itr.isDestroyed) continue;
+        itr.aliveTime -= dt;
+        if (itr.aliveTime <= 0) itr.isDestroyed = GL_TRUE;
+    }
 }
 
 GLvoid Game::Render(GLfloat dt)
 {
     SpriteRenderer->Draw(ResourceManager::GetTexture("menu_background") ,glm::vec2(0, 0), glm::vec2(this->windowWidth, this->windowHeight), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    SpriteRenderer->Draw(ResourceManager::GetTexture("pawn1") ,glm::vec2(35, 42), glm::vec2(100, 100), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    SpriteRenderer->Draw(ResourceManager::GetTexture("pawn3"), glm::vec2(535, 352), glm::vec2(100, 100), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    SpriteRenderer->Draw(ResourceManager::GetTexture("pawn1"), glm::vec2(145, 215), glm::vec2(100, 100), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    SpriteRenderer->Draw(ResourceManager::GetTexture("orange"), glm::vec2(((this->windowWidth / 2) - 50), ((this->windowHeight / 2) - 50)), glm::vec2(100, 100), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    SpriteRenderer->Draw(ResourceManager::GetTexture("pawn3"), glm::vec2(685, 231), glm::vec2(100, 100), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    SpriteRenderer->Draw(ResourceManager::GetTexture("pawn2"), glm::vec2(456, 565), glm::vec2(100, 100), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    SpriteRenderer->Draw(ResourceManager::GetTexture("pawn2"), glm::vec2(875, 555), glm::vec2(100, 100), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+    for (GamePawn &itr : this->Pawn)
+    {
+        if (itr.isDestroyed) continue;
+        itr.Draw(*SpriteRenderer);
+    }
 
     TextRenderer->RenderText("Everyone love mimi <3", 250.0f, 200.0f, 0.40f, glm::vec3(255.0f / 255.0f, 28.0f / 255.0f, 202.0f / 255.0f));
+}
+
+GLvoid Game::ProcessInput()
+{
+    if (this->key[GLFW_MOUSE_BUTTON_LEFT] && !this->keyprocessed[GLFW_MOUSE_BUTTON_LEFT])
+    {
+        //check all object.onclick() (pawn, button, etc).
+        this->keyprocessed[GLFW_MOUSE_BUTTON_LEFT] = GL_TRUE;
+    }
+    if (this->Currentlevel == PLAY_LV)
+    {
+        if (this->CurrentPlayState != PAUSE && this->CurrentPlayState != END)
+        {
+            if (this->key[GLFW_KEY_ESCAPE] && !this->keyprocessed[GLFW_KEY_ESCAPE])
+            {
+                //game pause
+                this->keyprocessed[GLFW_KEY_ESCAPE] = GL_TRUE;
+            }
+        }
+    }
 }

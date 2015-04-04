@@ -40,10 +40,10 @@ int main()
 
         // Process Input Events
         glfwPollEvents();
-        //Hittheshapes.DetectInput(DeltaTime);
+        //Hittheshapes.ProcessInput();
 
         // Update Game
-        //Hittheshapes.Update(DeltaTime);
+        Hittheshapes.Update(DeltaTime);
 
         // Render
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
