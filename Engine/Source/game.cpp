@@ -44,12 +44,12 @@ GLvoid Game::init()
     TextRenderer->Load("../Font/supermarket.ttf", 128);
 
     // Create GamePawn
-    this->Pawn.push_back(GamePawn(glm::vec3(1.0 / 255.0f, 0, 0), 99, 2, glm::vec2(35, 42), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
-    this->Pawn.push_back(GamePawn(glm::vec3(2.0 / 255.0f, 0, 0), 99, 3, glm::vec2(535, 352), glm::vec2(100, 100), ResourceManager::GetTexture("pawn3")));
-    this->Pawn.push_back(GamePawn(glm::vec3(3.0 / 255.0f, 0, 0), 99, 6, glm::vec2(145, 215), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
-    this->Pawn.push_back(GamePawn(glm::vec3(4.0 / 255.0f, 0, 0), 99, 5, glm::vec2(685, 231), glm::vec2(100, 100), ResourceManager::GetTexture("pawn3")));
-    this->Pawn.push_back(GamePawn(glm::vec3(5.0 / 255.0f, 0, 0), 99, 2, glm::vec2(456, 565), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
-    this->Pawn.push_back(GamePawn(glm::vec3(6.0 / 255.0f, 0, 0), 99, 4, glm::vec2(875, 555), glm::vec2(100, 100), ResourceManager::GetTexture("pawn2")));
+    this->Pawn.push_back(GamePawn(glm::vec3(1.0 / 255.0f, 0, 0), 9999, 2, glm::vec2(35, 42), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
+    this->Pawn.push_back(GamePawn(glm::vec3(2.0 / 255.0f, 0, 0), 9999, 3, glm::vec2(535, 352), glm::vec2(100, 100), ResourceManager::GetTexture("pawn3")));
+    this->Pawn.push_back(GamePawn(glm::vec3(3.0 / 255.0f, 0, 0), 9999, 6, glm::vec2(145, 215), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
+    this->Pawn.push_back(GamePawn(glm::vec3(4.0 / 255.0f, 0, 0), 9999, 5, glm::vec2(685, 231), glm::vec2(100, 100), ResourceManager::GetTexture("pawn3")));
+    this->Pawn.push_back(GamePawn(glm::vec3(5.0 / 255.0f, 0, 0), 9999, 2, glm::vec2(456, 565), glm::vec2(100, 100), ResourceManager::GetTexture("pawn1")));
+    this->Pawn.push_back(GamePawn(glm::vec3(6.0 / 255.0f, 0, 0), 9999, 4, glm::vec2(875, 555), glm::vec2(100, 100), ResourceManager::GetTexture("pawn2")));
 }
 
 GLvoid Game::Update(GLfloat dt)
@@ -98,6 +98,14 @@ GLvoid Game::ProcessInput()
         glReadPixels(xpos, viewport[3]-ypos, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void*)pixel);
         std::cout << "X: " << xpos << " Y: " << ypos << std::endl;
         std::cout << "R: " << (int)pixel[0] << " G: " << (int)pixel[1] << " B: " << (int)pixel[2] << std::endl;
+        for (GamePawn &itr : this->Pawn)
+        {
+            if (itr.ColorID.r * 255.0f == pixel[0] && itr.ColorID.g * 255.0f == pixel[1] && itr.ColorID.b * 255.0f == pixel[2])
+            {
+                std::cout << "You get: " << itr.Score << " scores for clicking." << std::endl;
+                itr.isDestroyed = GL_TRUE;
+            }
+        }
         this->Keysprocessed[GLFW_MOUSE_BUTTON_LEFT] = GL_TRUE;
     }
     if (this->Currentlevel == PLAY_LV)
