@@ -31,6 +31,7 @@
     <ClInclude Include="Source\texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shader\colorid.frag" />
     <None Include="Shader\sprite.frag" />
     <None Include="Shader\sprite.vert" />
     <None Include="Shader\text.frag" />

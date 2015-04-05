@@ -47,6 +47,10 @@ int main()
         DeltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        // Clear color buffer
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         // Process Input Events
         glfwPollEvents();
         Hittheshapes.ProcessInput();

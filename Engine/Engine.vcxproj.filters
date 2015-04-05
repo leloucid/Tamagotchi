@@ -82,5 +82,8 @@
     <None Include="Shader\text.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
+    <None Include="Shader\colorid.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
