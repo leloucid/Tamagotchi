@@ -23,6 +23,7 @@
   <ItemGroup>
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\game_pawn.h" />
+    <ClInclude Include="Source\main.h" />
     <ClInclude Include="Source\resourcemanager.h" />
     <ClInclude Include="Source\shader.h" />
     <ClInclude Include="Source\spriterender.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="Source\texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shader\colorid.frag" />
     <None Include="Shader\sprite.frag" />
     <None Include="Shader\sprite.vert" />
     <None Include="Shader\text.frag" />

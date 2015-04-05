@@ -31,14 +31,12 @@ class Game
         GLuint Currenttheme;
         GameMode Currentmode;
         PlayState CurrentPlayState;
-        GLuint score;
-        GLboolean key[1024], keyprocessed[1024];
+        GLuint score;        
         //std::vector<GameTheme> Themes;
         //std::vector<GameMode> Mode;
         std::vector<GamePawn> Pawn;
-        // Load level/theme/mode (use before game level)
+        // Load theme/mode (use before game level)
         GLvoid LoadTheme();
-        GLvoid LoadLevel();
         GLvoid LoadMode();
         // Draw level
         GLvoid DrawCurrentLevel(GLfloat dt);
@@ -48,6 +46,8 @@ class Game
         GLvoid SpawnPawn();
         GLvoid UpdatePawn(GLfloat dt);
     public:
+        // Game State
+        GLboolean Keys[1024], Keysprocessed[1024];
         // Game Configure
         GLuint windowWidth, windowHeight;
         // Constructor/Deconstructor

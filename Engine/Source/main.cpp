@@ -1,7 +1,13 @@
-#include "game.h"
-#include "resourcemanager.h"
+#include "main.h"
 
 Game Hittheshapes(1024, 768);
+
+// Window declerations
+GLFWwindow* window;
+
+// GLFW function declerations
+GLvoid key_callback(GLFWwindow* window, GLint key, GLint scancode, GLint action, GLint mode);
+GLvoid mouse_button_callback(GLFWwindow* window, GLint button, GLint action, GLint mods);
 
 int main()
 {
@@ -12,11 +18,14 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(Hittheshapes.windowWidth, Hittheshapes.windowHeight, "Hit the shapes!", nullptr, nullptr);
+    Makewindow();
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
     glewInit();
+
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
 
     // Configure OpenGL
     glViewport(0, 0, Hittheshapes.windowWidth, Hittheshapes.windowHeight);
@@ -38,9 +47,13 @@ int main()
         DeltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        // Clear color buffer
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         // Process Input Events
         glfwPollEvents();
-        //Hittheshapes.ProcessInput();
+        Hittheshapes.ProcessInput();
 
         // Update Game
         Hittheshapes.Update(DeltaTime);
@@ -57,4 +70,45 @@ int main()
     ResourceManager::Clear();
     glfwTerminate();
     return 0;
+}
+
+GLvoid Makewindow()
+{
+    window = glfwCreateWindow(Hittheshapes.windowWidth, Hittheshapes.windowHeight, "Hit the shapes!", nullptr, nullptr);
+}
+
+GLFWwindow* Getwindow()
+{
+    return window;
+}
+
+GLvoid key_callback(GLFWwindow* window, GLint key, GLint scancode, GLint action, GLint mode)
+{
+    // When a user presses the escape key, we set the WindowShouldClose property to true, closing the application
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    if (key >= 0 && key < 1024)
+    {
+        if (action == GLFW_PRESS)
+            Hittheshapes.Keys[key] = GL_TRUE;
+        else if (action == GLFW_RELEASE)
+        {
+            Hittheshapes.Keys[key] = GL_FALSE;
+            Hittheshapes.Keysprocessed[key] = GL_FALSE;
+        }
+    }
+}
+
+GLvoid mouse_button_callback(GLFWwindow* window, GLint button, GLint action, GLint mods)
+{
+    if (button >= 0 && button <= 8)
+    {
+        if (action == GLFW_PRESS)
+            Hittheshapes.Keys[button] = GL_TRUE;
+        else if (action == GLFW_RELEASE)
+        {
+            Hittheshapes.Keys[button] = GL_FALSE;
+            Hittheshapes.Keysprocessed[button] = GL_FALSE;
+        }
+    }
 }
