@@ -65,6 +65,9 @@
     <ClInclude Include="Source\game_pawn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\sprite.frag">

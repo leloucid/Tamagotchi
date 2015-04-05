@@ -1,3 +1,4 @@
+#include "main.h"
 #include "game.h"
 #include "resourcemanager.h"
 #include "spriterender.h"
@@ -51,7 +52,7 @@ GLvoid Game::Update(GLfloat dt)
     static GLfloat timer = 0.0f;
 
     timer += dt;
-    printf("%.3f\n", timer);
+    //printf("%.3f\n", timer);
 
     for (GamePawn &itr : this->Pawn)
     {
@@ -76,19 +77,27 @@ GLvoid Game::Render(GLfloat dt)
 
 GLvoid Game::ProcessInput()
 {
-    if (this->key[GLFW_MOUSE_BUTTON_LEFT] && !this->keyprocessed[GLFW_MOUSE_BUTTON_LEFT])
+    if (this->Keys[GLFW_MOUSE_BUTTON_LEFT] && !this->Keysprocessed[GLFW_MOUSE_BUTTON_LEFT])
     {
         //check all object.onclick() (pawn, button, etc).
-        this->keyprocessed[GLFW_MOUSE_BUTTON_LEFT] = GL_TRUE;
+        GLint viewport[4];
+        GLubyte pixel[3];
+        GLdouble xpos, ypos;
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        glfwGetCursorPos(Getwindow(), &xpos, &ypos);
+        glReadPixels(xpos, viewport[3]-ypos, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void*)pixel);
+        std::cout << "X: " << xpos << " Y: " << ypos << std::endl;
+        std::cout << "R: " << (int)pixel[0] << " G: " << (int)pixel[1] << " B: " << (int)pixel[2] << std::endl;
+        this->Keysprocessed[GLFW_MOUSE_BUTTON_LEFT] = GL_TRUE;
     }
     if (this->Currentlevel == PLAY_LV)
     {
         if (this->CurrentPlayState != PAUSE && this->CurrentPlayState != END)
         {
-            if (this->key[GLFW_KEY_ESCAPE] && !this->keyprocessed[GLFW_KEY_ESCAPE])
+            if (this->Keys[GLFW_KEY_ESCAPE] && !this->Keysprocessed[GLFW_KEY_ESCAPE])
             {
                 //game pause
-                this->keyprocessed[GLFW_KEY_ESCAPE] = GL_TRUE;
+                this->Keysprocessed[GLFW_KEY_ESCAPE] = GL_TRUE;
             }
         }
     }
