@@ -1,4 +1,5 @@
 #include "main.h"
+#include <mxml.h>
 
 Game Hittheshapes(1024, 768);
 
@@ -39,6 +40,11 @@ int main()
     GLfloat lastFrame = 0.0f;
 
     Hittheshapes.init();
+
+    Hittheshapes.CurrentPlayState = PLAY;
+    Hittheshapes.Currentmode = ENDLESS;
+    if (Hittheshapes.Currentmode == TIME_ATTACK) Hittheshapes.Time = 30.0f;
+    else if (Hittheshapes.Currentmode == ENDLESS) Hittheshapes.Lives = 6;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -84,9 +90,6 @@ GLFWwindow* Getwindow()
 
 GLvoid key_callback(GLFWwindow* window, GLint key, GLint scancode, GLint action, GLint mode)
 {
-    // When a user presses the escape key, we set the WindowShouldClose property to true, closing the application
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
     if (key >= 0 && key < 1024)
     {
         if (action == GLFW_PRESS)
