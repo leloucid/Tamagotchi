@@ -16,7 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 //#include "game_theme.h"
-//#include "game_mode.h"
+//#include "game_ui_button.h"
 #include "game_pawn.h"
 
 enum GameLevel { MENU_LV, THEME_LV, MODE_LV, PLAY_LV };
@@ -25,27 +25,24 @@ enum PlayState { PLAY, PAUSE, END };
 
 class Game
 {
-    private:
+    public:
         // Game State
         GameLevel Currentlevel;
         GLuint Currenttheme;
         GameMode Currentmode;
         PlayState CurrentPlayState;
-        GLuint score;        
+        GLuint Score;
+        GLint Lives;
+        GLfloat Time;
         //std::vector<GameTheme> Themes;
-        //std::vector<GameMode> Mode;
+        //std::vector<GameButton> Buttons;
         std::vector<GamePawn> Pawn;
         // Load theme/mode (use before game level)
         GLvoid LoadTheme();
-        GLvoid LoadMode();
         // Draw level
         GLvoid DrawCurrentLevel(GLfloat dt);
-        // Update game level
-        GLvoid UpdateGame(GLfloat dt);
         // Pawn in game
-        GLvoid SpawnPawn();
-        GLvoid UpdatePawn(GLfloat dt);
-    public:
+        GLvoid SpawnPawn(GLfloat dt);
         // Game State
         GLboolean Keys[1024], Keysprocessed[1024];
         // Game Configure
@@ -63,10 +60,6 @@ class Game
         GLvoid Render(GLfloat dt);
         // Reset
         GLvoid ResetGame();
-        // Change level/theme/game mode
-        GLvoid ChangeLevel(GameLevel level);
-        GLvoid ChangeTheme(GLuint theme);
-        GLvoid ChangeMode(GameMode mode);
 };
 
 #endif GAME
