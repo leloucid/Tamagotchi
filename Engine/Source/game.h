@@ -16,6 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 //#include "game_theme.h"
+//#include "game_ui_button.h"
 #include "game_pawn.h"
 
 enum GameLevel { MENU_LV, THEME_LV, MODE_LV, PLAY_LV };
@@ -34,10 +35,10 @@ class Game
         GLint Lives;
         GLfloat Time;
         //std::vector<GameTheme> Themes;
+        //std::vector<GameButton> Buttons;
         std::vector<GamePawn> Pawn;
         // Load theme/mode (use before game level)
         GLvoid LoadTheme();
-        GLvoid LoadMode();
         // Draw level
         GLvoid DrawCurrentLevel(GLfloat dt);
         // Pawn in game

@@ -5,6 +5,9 @@
     <version>0.1alpha</version>
     <author>Meranote</author>
     
+    <!-- Theme Preview -->
+    <preview>preview.jpg</preview>
+
     <!-- Theme -->
     <bg>milkyway-galaxy-bg.jpg</bg>
 
@@ -31,10 +34,6 @@
         <size>60</size>
     </pawn>
     <!-- Size max 100 -->
-
-    <!-- Sound -->
-    <bgm>bgm.wav</bgm> <!-- bgm => background music -->
-    <onhit>onhit.wav</onhit> <!-- Play when click on object -->
     
     <!-- Power-Ups -->
     <slow>orange_detoure.png</slow>
