@@ -61,10 +61,13 @@ class Game
         GLvoid Render(GLfloat dt);
         // Reset
         GLvoid ResetGame();
+        // Change Level
+        GLvoid ChangeLevel(GameLevel level);
     private:
         const GLfloat TimeSpawnBase = 1.75f;
         GLfloat NextTimeSpawn = 0.0f;
         GLfloat PlayTimer = 0.0f;
+        GLvoid ResetColorID();
 };
 
 #endif GAME

@@ -9,7 +9,7 @@ SpriteRender *SpriteRenderer;
 SpriteRender *ColorIDRenderer;
 TextRender *TextRenderer;
 
-Game::Game(GLuint width, GLuint heigth) : windowWidth(width), windowHeight(heigth) ,Currentlevel(PLAY_LV), Currenttheme(0), Score(0)
+Game::Game(GLuint width, GLuint heigth) : windowWidth(width), windowHeight(heigth) ,Currentlevel(MENU_LV), Currenttheme(0), Score(0)
 {
 
 }
@@ -27,6 +27,8 @@ GLvoid Game::init()
     ResourceManager::LoadShader("../Shader/sprite.vert", "../Shader/sprite.frag", "sprite");
     ResourceManager::LoadShader("../Shader/sprite.vert", "../Shader/colorid.frag", "colorid");
     // Load textures
+    // UI Button loaded
+    ResourceManager::LoadTexture("../Images/Button/btn_play.png", GL_TRUE, "ui_btn_play");
     // Theme loaded
     ResourceManager::LoadTexture("../Images/milkyway-galaxy-bg.jpg", GL_FALSE, "theme_background");
     ResourceManager::LoadTexture("../Images/mimi1.png", GL_TRUE, "theme_pawn1");
@@ -41,6 +43,8 @@ GLvoid Game::init()
     ColorIDRenderer = new SpriteRender(ResourceManager::GetShader("colorid"));
     TextRenderer = new TextRender(this->windowWidth, this->windowHeight);
     TextRenderer->Load("../Font/supermarket.ttf", 128);
+    // Initialize level
+    this->ChangeLevel(MENU_LV);
 }
 
 GLvoid Game::Update(GLfloat dt)
@@ -158,8 +162,25 @@ GLvoid Game::ProcessInput()
             {
                 if (itr.ColorID.r * 255.0f == pixel[0] && itr.ColorID.g * 255.0f == pixel[1] && itr.ColorID.b * 255.0f == pixel[2])
                 {
-                    // Callback OnClick function
-                    itr.fnptr();
+                    // set isClicked to true to used to process in future
+                    itr.isClicked = GL_TRUE;
+                }
+            }
+
+            for (UIButton &itr : this->Buttons)
+            {
+                if (itr.isClicked)
+                {
+                    if (itr.ColorID.r * 255.0f == 1.0f, itr.ColorID.g * 255.0f == 0.0f, itr.ColorID.b * 255.0f == 0.0f)
+                    {
+                        itr.isClicked = GL_FALSE;
+                        this->ChangeLevel(PLAY_LV);
+                        this->Currentmode = TIME_ATTACK;
+                        if (this->Currentmode == TIME_ATTACK) this->Time = 30.0f;
+                        else if (this->Currentmode == ENDLESS) this->Lives = 15;
+                        break;
+                    }
+                    
                 }
             }
         }
@@ -192,6 +213,7 @@ GLvoid Game::ProcessInput()
                 if (this->Keys[anykeypress])
                 {
                     this->ResetGame();
+                    this->ChangeLevel(MENU_LV);
                     this->Keysprocessed[anykeypress] = GL_TRUE;
                     break;
                 }
@@ -202,7 +224,17 @@ GLvoid Game::ProcessInput()
 
 GLvoid Game::DrawCurrentLevel(GLfloat dt)
 {
-    if (this->Currentlevel == PLAY_LV)
+    if (this->Currentlevel == MENU_LV)
+    {
+        SpriteRenderer->Draw(ResourceManager::GetTexture("theme_background"), glm::vec2(0, 0), glm::vec2(this->windowWidth, this->windowHeight), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+        for (UIButton &itr : this->Buttons)
+        {
+            itr.Draw(*SpriteRenderer);
+        }
+
+    }
+    else if (this->Currentlevel == PLAY_LV)
     {
         SpriteRenderer->Draw(ResourceManager::GetTexture("theme_background"), glm::vec2(0, 0), glm::vec2(this->windowWidth, this->windowHeight), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -327,16 +359,39 @@ GLvoid Game::SpawnPawn(GLfloat dt)
     }
 }
 
+GLvoid Game::ChangeLevel(GameLevel level)
+{
+    this->Buttons.clear();
+    this->ResetColorID();
+
+    if (level == MENU_LV)
+    {
+        this->Currentlevel = MENU_LV;
+
+        this->Buttons.push_back(UIButton(glm::vec3(1.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f), glm::vec2(0, 0), glm::vec2(250, 88), ResourceManager::GetTexture("ui_btn_play")));
+    }
+    else if (level == PLAY_LV)
+    {
+        this->Currentlevel = PLAY_LV;
+        this->CurrentPlayState = PLAY;
+    }
+}
+
 GLvoid Game::ResetGame()
 {
     this->Score = 0;
     this->Time = 30.0f;
     this->Lives = 0;
-    this->RSCID_red = 1.0f;
-    this->RSCID_green = 0.0f;
-    this->RSCID_blue = 0.0f;
     this->Pawn.clear();
     this->CurrentPlayState = PLAY;
     this->PlayTimer = 0.0f;
     this->NextTimeSpawn = 0.0f;
+    this->ResetColorID();
+}
+
+GLvoid Game::ResetColorID()
+{
+    this->RSCID_red = 1.0f;
+    this->RSCID_green = 0.0f;
+    this->RSCID_blue = 0.0f;
 }

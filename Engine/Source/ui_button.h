@@ -14,6 +14,7 @@ class UIButton
         glm::vec2 Position, Size;
         glm::vec3 Color, ColorID;
         GLfloat Rotation;
+        GLboolean isClicked;
         // Texture
         Texture2D Sprite;
         // Constructor
@@ -23,9 +24,6 @@ class UIButton
         virtual GLvoid Draw(SpriteRender &renderer);
         // Draw color ID
         virtual GLvoid DrawColorID(SpriteRender &renderer);
-        // OnClickEvent
-        GLvoid (*fnptr)();
-        GLvoid OnClick(GLvoid (*fntpr)());
 };
 
 #endif UI_BUTTON

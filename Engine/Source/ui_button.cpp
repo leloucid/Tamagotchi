@@ -21,8 +21,3 @@ GLvoid UIButton::DrawColorID(SpriteRender &renderer)
     renderer.Draw(this->Sprite, this->Position, this->Size, this->Rotation, this->ColorID);
     glEnable(GL_DITHER);
 }
-
-GLvoid UIButton::OnClick(GLvoid (*fntpr)())
-{
-    this->fnptr = fntpr;
-}

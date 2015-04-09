@@ -41,11 +41,6 @@ int main()
 
     Hittheshapes.init();
 
-    Hittheshapes.CurrentPlayState = PLAY;
-    Hittheshapes.Currentmode = TIME_ATTACK;
-    if (Hittheshapes.Currentmode == TIME_ATTACK) Hittheshapes.Time = 30.0f;
-    else if (Hittheshapes.Currentmode == ENDLESS) Hittheshapes.Lives = 15;
-
     while (!glfwWindowShouldClose(window))
     {
         // Calculate DeltaTime
