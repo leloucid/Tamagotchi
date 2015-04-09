@@ -14,7 +14,7 @@ class UIButton
         glm::vec2 Position, Size;
         glm::vec3 Color, ColorID;
         GLfloat Rotation;
-        GLboolean isClicked;
+        GLboolean isClicked = GL_FALSE;
         // Texture
         Texture2D Sprite;
         // Constructor
