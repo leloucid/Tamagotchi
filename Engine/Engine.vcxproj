@@ -19,17 +19,21 @@
     <ClCompile Include="Source\spriterender.cpp" />
     <ClCompile Include="Source\textrender.cpp" />
     <ClCompile Include="Source\texture.cpp" />
+    <ClCompile Include="Source\ui_button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\game_pawn.h" />
+    <ClInclude Include="Source\main.h" />
     <ClInclude Include="Source\resourcemanager.h" />
     <ClInclude Include="Source\shader.h" />
     <ClInclude Include="Source\spriterender.h" />
     <ClInclude Include="Source\textrender.h" />
     <ClInclude Include="Source\texture.h" />
+    <ClInclude Include="Source\ui_button.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shader\colorid.frag" />
     <None Include="Shader\sprite.frag" />
     <None Include="Shader\sprite.vert" />
     <None Include="Shader\text.frag" />
@@ -88,7 +92,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib_x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;OpenAL32.lib;glfw3.lib;glew32s.lib;SOIL.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;OpenAL32.lib;glfw3.lib;glew32s.lib;SOIL.lib;freetype.lib;mxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -108,7 +112,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\lib_x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;OpenAL32.lib;glfw3.lib;glew32s.lib;SOIL.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;OpenAL32.lib;glfw3.lib;glew32s.lib;SOIL.lib;freetype.lib;mxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

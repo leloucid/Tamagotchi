@@ -15,8 +15,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-//#include "game_theme.h"
-//#include "game_mode.h"
+#include "ui_button.h"
 #include "game_pawn.h"
 
 enum GameLevel { MENU_LV, THEME_LV, MODE_LV, PLAY_LV };
@@ -25,29 +24,24 @@ enum PlayState { PLAY, PAUSE, END };
 
 class Game
 {
-    private:
+    public:
         // Game State
         GameLevel Currentlevel;
         GLuint Currenttheme;
         GameMode Currentmode;
         PlayState CurrentPlayState;
-        GLuint score;
-        GLboolean key[1024], keyprocessed[1024];
-        //std::vector<GameTheme> Themes;
-        //std::vector<GameMode> Mode;
+        GLuint Score;
+        GLint Lives;
+        GLfloat Time;
+        GLfloat RSCID_red = 1.0f, RSCID_green = 0.0f, RSCID_blue = 0.0f; // RSCID - Random Spawn ColorID - Used for click on object checking
+        std::vector<UIButton> Buttons;
         std::vector<GamePawn> Pawn;
-        // Load level/theme/mode (use before game level)
-        GLvoid LoadTheme();
-        GLvoid LoadLevel();
-        GLvoid LoadMode();
         // Draw level
         GLvoid DrawCurrentLevel(GLfloat dt);
-        // Update game level
-        GLvoid UpdateGame(GLfloat dt);
         // Pawn in game
-        GLvoid SpawnPawn();
-        GLvoid UpdatePawn(GLfloat dt);
-    public:
+        GLvoid SpawnPawn(GLfloat dt);
+        // Game State
+        GLboolean Keys[1024], Keysprocessed[1024];
         // Game Configure
         GLuint windowWidth, windowHeight;
         // Constructor/Deconstructor
@@ -63,10 +57,13 @@ class Game
         GLvoid Render(GLfloat dt);
         // Reset
         GLvoid ResetGame();
-        // Change level/theme/game mode
+        // Change Level
         GLvoid ChangeLevel(GameLevel level);
-        GLvoid ChangeTheme(GLuint theme);
-        GLvoid ChangeMode(GameMode mode);
+    private:
+        const GLfloat TimeSpawnBase = 1.75f;
+        GLfloat NextTimeSpawn = 0.0f;
+        GLfloat PlayTimer = 0.0f;
+        GLvoid ResetColorID();
 };
 
 #endif GAME
