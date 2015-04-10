@@ -16,7 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 //#include "game_theme.h"
-//#include "game_ui_button.h"
+#include "ui_button.h"
 #include "game_pawn.h"
 
 enum GameLevel { MENU_LV, THEME_LV, MODE_LV, PLAY_LV };
@@ -34,8 +34,9 @@ class Game
         GLuint Score;
         GLint Lives;
         GLfloat Time;
+        GLfloat RSCID_red = 1.0f, RSCID_green = 0.0f, RSCID_blue = 0.0f; // RSCID - Random Spawn ColorID - Used for click on object checking
         //std::vector<GameTheme> Themes;
-        //std::vector<GameButton> Buttons;
+        std::vector<UIButton> Buttons;
         std::vector<GamePawn> Pawn;
         // Load theme/mode (use before game level)
         GLvoid LoadTheme();
@@ -60,6 +61,13 @@ class Game
         GLvoid Render(GLfloat dt);
         // Reset
         GLvoid ResetGame();
+        // Change Level
+        GLvoid ChangeLevel(GameLevel level);
+    private:
+        const GLfloat TimeSpawnBase = 1.75f;
+        GLfloat NextTimeSpawn = 0.0f;
+        GLfloat PlayTimer = 0.0f;
+        GLvoid ResetColorID();
 };
 
 #endif GAME
