@@ -15,7 +15,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-//#include "game_theme.h"
 #include "ui_button.h"
 #include "game_pawn.h"
 
@@ -35,11 +34,8 @@ class Game
         GLint Lives;
         GLfloat Time;
         GLfloat RSCID_red = 1.0f, RSCID_green = 0.0f, RSCID_blue = 0.0f; // RSCID - Random Spawn ColorID - Used for click on object checking
-        //std::vector<GameTheme> Themes;
         std::vector<UIButton> Buttons;
         std::vector<GamePawn> Pawn;
-        // Load theme/mode (use before game level)
-        GLvoid LoadTheme();
         // Draw level
         GLvoid DrawCurrentLevel(GLfloat dt);
         // Pawn in game

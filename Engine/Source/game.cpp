@@ -9,6 +9,12 @@ SpriteRender *SpriteRenderer;
 SpriteRender *ColorIDRenderer;
 TextRender *TextRenderer;
 
+static GLchar pathlist[255][64];
+static GLint themecount = 0;
+static GLchar temptheme[255][256];
+
+GLvoid de_allocatethemepreview();
+
 Game::Game(GLuint width, GLuint heigth) : windowWidth(width), windowHeight(heigth) ,Currentlevel(MENU_LV), Currenttheme(0), Score(0)
 {
 
@@ -27,13 +33,12 @@ GLvoid Game::init()
     ResourceManager::LoadShader("../Shader/sprite.vert", "../Shader/sprite.frag", "sprite");
     ResourceManager::LoadShader("../Shader/sprite.vert", "../Shader/colorid.frag", "colorid");
     // Load textures
+    // UI BG
+    ResourceManager::LoadTexture("../Images/milkyway-galaxy-bg.jpg", GL_FALSE, "background");
     // UI Button loaded
     ResourceManager::LoadTexture("../Images/Button/btn_play.png", GL_TRUE, "ui_btn_play");
-    // Theme loaded
-    ResourceManager::LoadTexture("../Images/milkyway-galaxy-bg.jpg", GL_FALSE, "theme_background");
-    ResourceManager::LoadTexture("../Images/mimi1.png", GL_TRUE, "theme_pawn1");
-    ResourceManager::LoadTexture("../Images/mimi2.png", GL_TRUE, "theme_pawn2");
-    ResourceManager::LoadTexture("../Images/mimi3.png", GL_TRUE, "theme_pawn3");
+    ResourceManager::LoadTexture("../Images/Button/btn_timeatk.png", GL_TRUE, "ui_btn_timeatk");
+    ResourceManager::LoadTexture("../Images/Button/btn_endless.png", GL_TRUE, "ui_btn_endless");
     // Configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->windowWidth), static_cast<GLfloat>(this->windowHeight), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("sprite").Use().SetMatrix4("projection", projection);
@@ -171,16 +176,37 @@ GLvoid Game::ProcessInput()
             {
                 if (itr.isClicked)
                 {
-                    if (itr.ColorID.r * 255.0f == 1.0f, itr.ColorID.g * 255.0f == 0.0f, itr.ColorID.b * 255.0f == 0.0f)
+                    itr.isClicked = GL_FALSE;
+                    if (this->Currentlevel == MENU_LV)
                     {
-                        itr.isClicked = GL_FALSE;
-                        this->ChangeLevel(PLAY_LV);
-                        this->Currentmode = TIME_ATTACK;
-                        if (this->Currentmode == TIME_ATTACK) this->Time = 30.0f;
-                        else if (this->Currentmode == ENDLESS) this->Lives = 15;
-                        break;
+                        if (itr.ColorID.r * 255.0f == 1.0f && itr.ColorID.g * 255.0f == 0.0f && itr.ColorID.b * 255.0f == 0.0f)
+                        {
+                            this->ChangeLevel(THEME_LV);
+                        }
                     }
-                    
+                    else if (this->Currentlevel == THEME_LV)
+                    {
+                        this->ChangeLevel(MODE_LV);
+                        int i = itr.ColorID.r * 255.0f;
+                        this->LoadGameTheme(pathlist[1]);
+                        de_allocatethemepreview();
+                    }
+                    else if (this->Currentlevel == MODE_LV)
+                    {
+                        if (itr.ColorID.r * 255.0f == 1.0f && itr.ColorID.g * 255.0f == 0.0f && itr.ColorID.b * 255.0f == 0.0f)
+                        {
+                            this->ChangeLevel(PLAY_LV);
+                            this->Currentmode = TIME_ATTACK;
+                            this->Time = 30.0f;
+                        }
+                        else if (itr.ColorID.r * 255.0f == 2.0f && itr.ColorID.g * 255.0f == 0.0f && itr.ColorID.b * 255.0f == 0.0f)
+                        {
+                            this->ChangeLevel(PLAY_LV);
+                            this->Currentmode = ENDLESS;
+                            this->Lives = 15;
+                        }
+                    }
+                    break;
                 }
             }
         }
@@ -224,17 +250,16 @@ GLvoid Game::ProcessInput()
 
 GLvoid Game::DrawCurrentLevel(GLfloat dt)
 {
-    if (this->Currentlevel == MENU_LV)
+    if (this->Currentlevel != PLAY_LV)
     {
-        SpriteRenderer->Draw(ResourceManager::GetTexture("theme_background"), glm::vec2(0, 0), glm::vec2(this->windowWidth, this->windowHeight), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+        SpriteRenderer->Draw(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->windowWidth, this->windowHeight), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
         for (UIButton &itr : this->Buttons)
         {
             itr.Draw(*SpriteRenderer);
         }
-
     }
-    else if (this->Currentlevel == PLAY_LV)
+    else
     {
         SpriteRenderer->Draw(ResourceManager::GetTexture("theme_background"), glm::vec2(0, 0), glm::vec2(this->windowWidth, this->windowHeight), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -321,7 +346,7 @@ GLvoid Game::SpawnPawn(GLfloat dt)
         // Random spawn by time
         if (this->PlayTimer > this->NextTimeSpawn)
         {
-            for (GLfloat i = 0.0f; i < PlayTimer / 5; i++)
+            for (GLfloat i = 0.0f; i < PlayTimer / 10; i++)
             {
                 GLfloat x_pos = std::rand() % (this->windowWidth - 100 + 1);
                 GLfloat y_pos = std::rand() % (this->windowHeight - 100 + 1);
@@ -332,11 +357,11 @@ GLvoid Game::SpawnPawn(GLfloat dt)
                 }
                 else if (percentofrarespawn >= 6001 && percentofrarespawn <= 8500)
                 {
-                    this->Pawn.push_back(GamePawn(glm::vec3(this->RSCID_red / 255.0f, this->RSCID_green / 255.0f, this->RSCID_blue / 255.0f), 2.5, 3, glm::vec2(x_pos, y_pos), glm::vec2(80, 80), ResourceManager::GetTexture("theme_pawn2")));
+                    this->Pawn.push_back(GamePawn(glm::vec3(this->RSCID_red / 255.0f, this->RSCID_green / 255.0f, this->RSCID_blue / 255.0f), 3, 1, glm::vec2(x_pos, y_pos), glm::vec2(100, 100), ResourceManager::GetTexture("theme_pawn2")));
                 }
                 else if (percentofrarespawn >= 8501 && percentofrarespawn <= 9999)
                 {
-                    this->Pawn.push_back(GamePawn(glm::vec3(this->RSCID_red / 255.0f, this->RSCID_green / 255.0f, this->RSCID_blue / 255.0f), 1.75, 5, glm::vec2(x_pos, y_pos), glm::vec2(60, 60), ResourceManager::GetTexture("theme_pawn3")));
+                    this->Pawn.push_back(GamePawn(glm::vec3(this->RSCID_red / 255.0f, this->RSCID_green / 255.0f, this->RSCID_blue / 255.0f), 3, 1, glm::vec2(x_pos, y_pos), glm::vec2(100, 100), ResourceManager::GetTexture("theme_pawn3")));
                 }
                 if (this->RSCID_red != 255)
                 {
@@ -370,6 +395,34 @@ GLvoid Game::ChangeLevel(GameLevel level)
 
         this->Buttons.push_back(UIButton(glm::vec3(1.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f), glm::vec2(0, 0), glm::vec2(250, 88), ResourceManager::GetTexture("ui_btn_play")));
     }
+    else if (level == THEME_LV)
+    {
+        this->Currentlevel = THEME_LV;
+
+        strcpy(pathlist[0], "");
+        themecount = 0;
+
+        strcpy(pathlist[1], "../Theme/City/");
+
+        GLchar pathtopreview[256] = "";
+        strcpy(pathtopreview, pathlist[1]);
+        strcat(pathtopreview, "preview.jpg");
+
+        strcpy(temptheme[themecount], "");
+        sprintf(temptheme[themecount], "Theme%03d", themecount);
+
+        ResourceManager::LoadTexture(pathtopreview, GL_TRUE, temptheme[themecount]);
+        this->Buttons.push_back(UIButton(glm::vec3(1.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f), glm::vec2(0, 0), glm::vec2(300, 225), ResourceManager::GetTexture(temptheme[themecount])));
+
+        themecount++;
+    }
+    else if (level == MODE_LV)
+    {
+        this->Currentlevel = MODE_LV;
+
+        this->Buttons.push_back(UIButton(glm::vec3(1.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f), glm::vec2(0, 0), glm::vec2(250, 88), ResourceManager::GetTexture("ui_btn_timeatk")));
+        this->Buttons.push_back(UIButton(glm::vec3(2.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f), glm::vec2(0, 98), glm::vec2(250, 88), ResourceManager::GetTexture("ui_btn_endless")));
+    }
     else if (level == PLAY_LV)
     {
         this->Currentlevel = PLAY_LV;
@@ -387,6 +440,10 @@ GLvoid Game::ResetGame()
     this->PlayTimer = 0.0f;
     this->NextTimeSpawn = 0.0f;
     this->ResetColorID();
+    ResourceManager::DeleteTexture("theme_background");
+    ResourceManager::DeleteTexture("theme_pawn1");
+    ResourceManager::DeleteTexture("theme_pawn2");
+    ResourceManager::DeleteTexture("theme_pawn3");
 }
 
 GLvoid Game::ResetColorID()
@@ -394,4 +451,41 @@ GLvoid Game::ResetColorID()
     this->RSCID_red = 1.0f;
     this->RSCID_green = 0.0f;
     this->RSCID_blue = 0.0f;
+}
+
+GLvoid Game::LoadGameTheme(GLchar *PathToGameTheme)
+{
+    std::cout << PathToGameTheme << std::endl;
+
+    GLchar pathtobackground[256] = "";
+    strcpy(pathtobackground, PathToGameTheme);
+    strcat(pathtobackground, "bg/bg.jpg");
+
+    std::cout << pathtobackground << std::endl;
+
+    GLchar pathtopawn1[256] = "";
+    strcpy(pathtopawn1, PathToGameTheme);
+    strcat(pathtopawn1, "pawn/1.png");
+
+    GLchar pathtopawn2[256] = "";
+    strcpy(pathtopawn2, PathToGameTheme);
+    strcat(pathtopawn2, "pawn/2.png");
+
+    GLchar pathtopawn3[256] = "";
+    strcpy(pathtopawn3, PathToGameTheme);
+    strcat(pathtopawn3, "pawn/3.png");
+
+    // Theme loaded
+    ResourceManager::LoadTexture(pathtobackground, GL_FALSE, "theme_background");
+    ResourceManager::LoadTexture(pathtopawn1, GL_TRUE, "theme_pawn1");
+    ResourceManager::LoadTexture(pathtopawn2, GL_TRUE, "theme_pawn2");
+    ResourceManager::LoadTexture(pathtopawn3, GL_TRUE, "theme_pawn3");
+}
+
+GLvoid de_allocatethemepreview()
+{
+    for (int i = 0; i < themecount; i++)
+    {
+        ResourceManager::DeleteTexture(temptheme[i]);
+    }
 }
