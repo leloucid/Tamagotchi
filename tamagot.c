@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<unistd.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 int sys()
 {
     int i,j;
@@ -128,7 +128,7 @@ int main()
                /*printf tamagot want Medicine*/
                break;
            }
-           case 95;
+           case 95:
            {
                /*printf tamagot want clean*/
                break;
@@ -138,6 +138,7 @@ int main()
                /*command print tamagot normal*/
            }
            /* if check for change status*/
+           system("cmd /c cls");
        }
        /*
        poring_normal(num);
@@ -145,7 +146,7 @@ int main()
        sleep(600);
        system("cls");
        /*printf("Your command :");
-       scanf("%d",&command);*/
+       scanf("%d",&command);
        */
     }
 }
