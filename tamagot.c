@@ -72,17 +72,78 @@ int command_line(command)
 
 int main()
 {
-    int num,command;
+    int num,status=99;
     num=0;
     while(1)
     {
        sys();
+       switch(status)
+       {
+           case 1:
+           {
+               /*call function*/
+               status=99;
+               break;
+           }
+           case 2:
+           {
+               /*call function*/
+               break;
+           }
+           case 3:
+           {
+               /*call function*/
+               break;
+           }
+           case 4:
+           {
+               /*call function*/
+               break;
+           }
+           case 5:
+           {
+               /*call function*/
+               break;
+           }
+           case 91:
+           {
+               /*printf tamagot want food*/
+               break;
+           }
+           case 92:
+           {
+               /*printf tamagot want play*/
+               break;
+           }
+           case 93:
+           {
+               /*printf tamagot want light*/
+               break;
+           }
+           case 94:
+           {
+               /*printf tamagot want Medicine*/
+               break;
+           }
+           case 95;
+           {
+               /*printf tamagot want clean*/
+               break;
+           }
+           default:
+           {
+               /*command print tamagot normal*/
+           }
+           /* if check for change status*/
+       }
+       /*
        poring_normal(num);
        num++;
        sleep(600);
        system("cls");
        /*printf("Your command :");
        scanf("%d",&command);*/
+       */
     }
 }
 
