@@ -69,6 +69,7 @@ int command_line(command)
     }
 }
 
+/*function check status input 5 variable return status*/
 
 int main()
 {
@@ -88,11 +89,13 @@ int main()
            case 2:
            {
                /*call function*/
+               status=99;
                break;
            }
            case 3:
            {
                /*call function*/
+               status=99;
                break;
            }
            case 4:
